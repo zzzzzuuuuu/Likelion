@@ -97,18 +97,19 @@ const getTicket = (peopleName, type, food) => {
   } else {
     return '잡았다 요놈!';
   }
-  return peopleName, price;
+
+  return { [peopleName]: price }; 
+  // return `${peopleName}: ${price}`; //중괄호 없이 출력하려면 이렇게 백틱으로 묶어서...! 
 };
 
 // 식권 지불 금액을 계산하는 함수를 완성하세요
 const getTickets = (ticketInfos) => {
     var tickets = []; // 식권 금액을 저장할 배열
-    for(let i=0; i<ticketInfos.length; i++) {
-      tickets.push(getTicket(ticketInfos[i].name, ticketInfos[i].type, ticketInfos[i].food));
+    for(let i=0; i<ticketInfos.length; i++) { // ticketInfos 각각 
+      tickets.push(getTicket(ticketInfos[i].name, ticketInfos[i].type, ticketInfos[i].food)); // getTicket 함수로 이름, 가격 정보를 저장함 
     }
     return tickets;
 };
-
 /*
   예상 출력
   ['김멋사: 7100', '배교수: 5500', '임직원: 4300', '찾았다 요놈!', '그런거 안팔아요']
