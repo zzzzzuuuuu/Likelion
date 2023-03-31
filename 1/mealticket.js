@@ -45,7 +45,7 @@
 */
 
 // FOODS_PRICE, PEOPLE_TYPE, PEOPLE_INFOS은 수정하면 안됩니다.
-const FOODS_PRICE = {
+const FOODS_PRICE = { // [key: value]
   돈까스: '7000', // not number, it is string
   제육: '5000',
   비빔밥: '4000',
@@ -81,40 +81,30 @@ const PEOPLE_INFOS = [
 
 // 식권 종이를 출력합니다. 식권 종이에는 이름과 금액이 있어야합니다.
 const getTicket = (peopleName, type, food) => {
-  let price = +FOODS_PRICE[food]; // string -> number로 변환
+  if(Object.keys(FOODS_PRICE).includes(food)) { // FOODS_PRICE의 key 값이 food에 있다면
+    var price = +FOODS_PRICE[food]; // price 변수에 저장. (string->number로 변환) if문 탈출해도 price 써야하니 var로 선언...
+  } else {
+    return '그런 거 안 팔아요';
+  }
 
-  if(!type in PEOPLE_TYPE) {
+  if(PEOPLE_TYPE.includes(type)) { // type이 교수, 직원, 학생이라면.. (확인)
+    if(type == 'professor') 
+      price += 500;
+    else if(type == 'employee') 
+      price += 300;
+    else if(type == 'student') 
+      price += 100;
+  } else {
     return '잡았다 요놈!';
   }
-  if(!food in FOODS_PRICE) {
-    return '그런 거 안팔아요';
-  }
-
-  switch (type) {
-    case 'professor':
-      price += 500;
-      break;
-
-    case 'employee':
-      price += 300;
-      break;
-
-    case 'student':
-      price += 100;
-    
-    default:
-      break;
-  }
-
-  return {name: peopleName, price: price}
+  return peopleName, price;
 };
 
 // 식권 지불 금액을 계산하는 함수를 완성하세요
 const getTickets = (ticketInfos) => {
-  // getTicket 함수를 이용해 PEOPLE_INFOS가 내야하는 식권 정보를 알아내세요
-    const tickets = [];
+    var tickets = []; // 식권 금액을 저장할 배열
     for(let i=0; i<ticketInfos.length; i++) {
-      tickets.push(getTicket(ticketInfos[i].name, ticketInfos[i].type, ticketInfos[i].food))
+      tickets.push(getTicket(ticketInfos[i].name, ticketInfos[i].type, ticketInfos[i].food));
     }
     return tickets;
 };
