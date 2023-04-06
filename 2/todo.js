@@ -33,7 +33,6 @@ let id = 0;
  * */
 const todoControl = (command, value) => { //todoControl: 커멘드와 값을 입력 받아 알맞은 함수를 호출
   // 대충 뭘 작성함
-  // command = prompt('커맨드를 입력하세요.');
   switch (command) {
     case 'create': createTodo(value); 
       break;
@@ -57,7 +56,7 @@ const createTodo = (newTodo) => { // todo 정보를 받아 추가
 
 // 출력 형식: 'id: 0, ttile: 타이틀, text: 텍스트'
 // 보너스: 리터럴 문자를 활용해 출력하세요.
-const readTodo = () => { // 전체 모록을 하나씩 읽음 
+const readTodo = () => { // 전체 목록을 하나씩 읽음
   for (const i of todos) { // todos 배열에서 값 하나하나 꺼내오기
     console.log(`id: ${i.id}, title: ${i.title}, text: ${i.text}`); // 출력
   }
@@ -69,10 +68,13 @@ const readTodo = () => { // 전체 모록을 하나씩 읽음
 const updateTodo = (targetTodo) => { // todo 정보(id포함)를 받아 해당 todo를 수정 push?
   // if (업데이트 하고자 하는 todo를 찾을 수 없다면) {
   //   return 에러 메시지를 출력하세요 }
-  for(const i=0; i<todos.length; i++) { 
-    if (!id.includes(todos[i].id)) { // id 값이 데이터에 존재하는지 확인
-      return console.log(`id = ${id}에 맞는 todo를 찾을 수 없습니다.`);
-    }
+  // for(const i=0; i<todos.length; i++) { 
+  //   if (!id.includes(todos[i].id)) { // id 값이 데이터에 존재하는지 확인
+  //     return console.log(`id = ${id}에 맞는 todo를 찾을 수 없습니다.`);
+  //   }
+  // }
+  if (todos.filter((i) => i.id != targetTodo.id)) {
+    return console.log(`id = ${id}에 맞는 todo를 찾을 수 없습니다.`);
   }
   // 업데이트 로직
   for (const i=0; i<todos.length; i++) {
@@ -86,13 +88,18 @@ const updateTodo = (targetTodo) => { // todo 정보(id포함)를 받아 해당 t
 const deleteTodo = (id) => { // id를 받아 해당 todo 삭제 delete
   // if (해당하는 todo id가 todo 데이터에 없다면) {
   //   return console.log(여기에 에러 메시지를 쓰세요); }
-  for(const i=0; i<todos.length; i++) { 
-    if (!id.includes(todos[i].id)) {
-      return console.log(`id = ${id}에 맞는 todo를 찾을 수 없습니다.`);
-    }
+
+  // for(const i=0; i<todos.length; i++) { 
+  //   if (!id.includes(todos[i].id)) {
+  //     return console.log(`id = ${id}에 맞는 todo를 찾을 수 없습니다.`);
+  //   }
+  // }
+
+  if (todos.filter((i) => i.id != id)) {
+    return console.log(`id = ${id}에 맞는 todo를 찾을 수 없습니다.`);
   }
   // 삭제 로직
-  todos = todos.filter((i) => i.id !== id); 
+  todos = todos.filter((i) => i.id !== id); // filter() 함수는 해당 모든 배열을 저장 
 };
 
 /*
